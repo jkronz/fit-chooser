@@ -60,6 +60,9 @@
   };
   
   function generateFit(shirts, pants, tries) {
+    if (shirts.lenght == 0 || pants.length == 0) {
+      return "TIME TO DO LAUNDRY!!";
+    }
     let randomShirt = Math.floor(Math.random() * shirts.length);
     let randomPant = Math.floor(Math.random() * pants.length);
     let selectedShirt = shirts[randomShirt];
