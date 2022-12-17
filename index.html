@@ -12,25 +12,25 @@
     <form>
       <h3>Shirts Available:</h3>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="blueShirt" id="blueShirt">
+        <input class="form-check-input" type="checkbox" value="Blue" name="shirts[]" id="blueShirt">
         <label class="form-check-label" for="blueShirt">Blue</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="burgandyShirt" id="burgandyShirt">
+        <input class="form-check-input" type="checkbox" value="Burgandy" name="shirts[]" id="burgandyShirt">
         <label class="form-check-label" for="burgandyShirt">Burgandy</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="whiteShirt" id="whiteShirt">
+        <input class="form-check-input" type="checkbox" value="White" name="shirts[]" id="whiteShirt">
         <label class="form-check-label" for="whiteShirt">White</label>
       </div>
 
       <h3>Pants Available:</h3>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="bluePants" id="bluePants">
+        <input class="form-check-input" type="checkbox" value="Blue" name="pants[]" id="bluePants">
         <label class="form-check-label" for="bluePants">Blue</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="brownPants" id="brownPants">
+        <input class="form-check-input" type="checkbox" value="Brown" name="pants[]" id="brownPants">
         <label class="form-check-label" for="brownPants">Brown</label>
       </div>
 
@@ -39,9 +39,40 @@
           <button type="submit" class="btn btn-primary">Choose!</button>
         </div>
       </div>
+      <div id="your-fit">
+
+      </div>
     </form>
   </div>
 
 </body>
-
+<script>
+(function() {
+  let form = document.querySelector('form');
+  let submitButton = form.querySelector('button');
+  submitButton.onclick = function(e) {
+    document.getElementById('your-fit').textContent = '';
+    let availableShirts = Array.from(form.querySelectorAll('input[name="shirts[]"]:checked')).map(inp => inp.value);
+    let availablePants = Array.from(form.querySelectorAll('input[name="pants[]"]:checked')).map(inp => inp.value);
+    let fit = generateFit(availableShirts, availablePants, 0);
+    document.getElementById('your-fit').textContent = fit;
+    e.preventDefault();
+  };
+  
+  function generateFit(shirts, pants, tries) {
+    let randomShirt = Math.floor(Math.random() * shirts.length);
+    let randomPant = Math.floor(Math.random() * pants.length);
+    let selectedShirt = shirts[randomShirt];
+    let selectedPant = pants[randomPant];
+    if (selectedShirt == selectedPant) {
+      if (tries == 10) {
+        return "Couldn't find a good fit. Try again!"
+      } else {
+        return generateFit(shirts, pants, tries + 1); //try again if we get blue/blue
+      }            
+    }
+    return `${selectedShirt} Shirt and ${selectedPant} Pants`
+  }
+})();
+</script>
 </html>
