@@ -13,25 +13,25 @@
     <form>
       <h3>Shirts Available:</h3>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="Blue" name="shirts[]" id="blueShirt">
+        <input class="form-check-input" type="checkbox" value="Blue" name="shirts[]" id="blueShirt" checked>
         <label class="form-check-label" for="blueShirt">Blue</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="Burgandy" name="shirts[]" id="burgandyShirt">
+        <input class="form-check-input" type="checkbox" value="Burgandy" name="shirts[]" id="burgandyShirt" checked>
         <label class="form-check-label" for="burgandyShirt">Burgandy</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="White" name="shirts[]" id="whiteShirt">
+        <input class="form-check-input" type="checkbox" value="White" name="shirts[]" id="whiteShirt" checked>
         <label class="form-check-label" for="whiteShirt">White</label>
       </div>
 
       <h3>Pants Available:</h3>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="Blue" name="pants[]" id="bluePants">
+        <input class="form-check-input" type="checkbox" value="Blue" name="pants[]" id="bluePants" checked>
         <label class="form-check-label" for="bluePants">Blue</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="Brown" name="pants[]" id="brownPants">
+        <input class="form-check-input" type="checkbox" value="Brown" name="pants[]" id="brownPants" checked>
         <label class="form-check-label" for="brownPants">Brown</label>
       </div>
 
@@ -51,15 +51,15 @@
 (function() {
   let form = document.querySelector('form');
   let submitButton = form.querySelector('button');
-  submitButton.onclick = function(e) {    
-    document.getElementById('your-fit').textContent = '';    
+  submitButton.onclick = function(e) {
+    document.getElementById('your-fit').textContent = '';
     let availableShirts = Array.from(form.querySelectorAll('input[name="shirts[]"]:checked')).map(inp => inp.value);
     let availablePants = Array.from(form.querySelectorAll('input[name="pants[]"]:checked')).map(inp => inp.value);
     let fit = generateFit(availableShirts, availablePants);
     document.getElementById('your-fit').textContent = fit;
     e.preventDefault();
   };
-  
+
   function generateFit(shirts, pants, tries) {
     if (shirts.length == 0 || pants.length == 0) {
       return "TIME TO DO LAUNDRY!!";
@@ -74,10 +74,10 @@
         selectedPant = 'Brown';
       } else if (tries == 10) {
         return "Couldn't find a good fit. Try again!";
-      } else {        
+      } else {
         tries = tries || 0;
         return generateFit(shirts, pants, tries + 1); //try again if we get blue/blue
-      }            
+      }
     }
     return `${selectedShirt} Shirt and ${selectedPant} Pants`
   }
